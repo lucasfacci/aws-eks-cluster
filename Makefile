@@ -4,6 +4,9 @@ fmt:
 	@terraform fmt \
 		-recursive
 
+validate:
+	@terraform validate
+
 plan:
 	@terraform plan \
 		-var="region=us-east-1" \
