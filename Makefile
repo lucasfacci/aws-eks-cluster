@@ -1,5 +1,8 @@
 APP = aws-eks-cluster
 
+init:
+	@terraform init
+
 fmt:
 	@terraform fmt \
 		-recursive
