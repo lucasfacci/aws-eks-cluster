@@ -5,6 +5,11 @@ module "eks_network" {
   tags         = var.tags
 }
 
+module "eks_ecr" {
+  source       = "./modules/ecr"
+  project_name = var.project_name
+}
+
 module "eks_cluster" {
   source           = "./modules/cluster"
   project_name     = var.project_name
@@ -28,4 +33,14 @@ module "eks_add_ons" {
   cluster_name = module.eks_cluster.cluster_name
   oidc         = module.eks_cluster.oidc
   tags         = var.tags
+}
+
+module "eks_ec2" {
+  source            = "./modules/ec2"
+  project_name      = var.project_name
+  vpc               = module.eks_network.vpc
+  public_subnet_1a  = module.eks_network.public_subnet_1a
+  private_subnet_1a = module.eks_network.private_subnet_1a
+  cluster_sg        = module.eks_cluster.cluster_sg
+  tags              = var.tags
 }
