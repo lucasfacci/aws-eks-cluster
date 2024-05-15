@@ -38,6 +38,13 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids = [
     aws_security_group.bastion_sg.id
   ]
+  user_data = <<EOF
+#!/bin/bash
+
+apt-add-repository ppa:ansible/ansible
+apt-get update
+apt-get install ansible -y
+EOF
 
   tags = merge(
     var.tags,
