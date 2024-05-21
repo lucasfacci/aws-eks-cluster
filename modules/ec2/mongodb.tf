@@ -39,7 +39,7 @@ resource "aws_security_group" "mongodb_sg" {
 }
 
 resource "aws_instance" "mongodb" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.mongodb_ubuntu.id
   instance_type = "t3.micro"
 
   key_name  = aws_key_pair.bastion_ssh.id
