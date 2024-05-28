@@ -11,11 +11,13 @@ module "eks_ecr" {
 }
 
 module "eks_cluster" {
-  source           = "./modules/cluster"
-  project_name     = var.project_name
-  public_subnet_1a = module.eks_network.public_subnet_1a
-  public_subnet_1b = module.eks_network.public_subnet_1b
-  tags             = var.tags
+  source                        = "./modules/cluster"
+  project_name                  = var.project_name
+  public_subnet_1a              = module.eks_network.public_subnet_1a
+  public_subnet_1b              = module.eks_network.public_subnet_1b
+  github_account_and_repository = var.github_account_and_repository
+  github_repository_branch_name = var.github_repository_branch_name
+  tags                          = var.tags
 }
 
 module "eks_managed_node_group" {

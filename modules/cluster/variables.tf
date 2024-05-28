@@ -17,3 +17,13 @@ variable "tags" {
   type        = map(any)
   description = "Tags that will be associated with the created resources."
 }
+
+variable "github_account_and_repository" {
+  description = "The GitHub repository name."
+  type        = string
+}
+
+variable "github_repository_branch_name" {
+  description = "The GitHub branch name."
+  type        = string
+}

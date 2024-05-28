@@ -31,7 +31,15 @@ resource "aws_iam_role" "gh_actions_oidc_role" {
             "Principal": {
                 "Federated": "${aws_iam_openid_connect_provider.gh_actions_oidc.arn}"
             },
-            "Action": "sts:AssumeRoleWithWebIdentity"
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringLike": {
+                    "token.actions.githubusercontent.com:sub": "repo:${var.github_account_and_repository}:ref:refs/heads/${var.github_repository_branch_name}"
+                },
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                }
+            }
         }
     ]
 }
@@ -51,7 +59,7 @@ resource "aws_iam_role_policy_attachment" "gh_actions_oidc_ecr_full_role_attachm
 }
 
 resource "aws_iam_policy" "gh_actions_eks_ro" {
-  name        = "${var.project_name}-eks-ro"
+  name = "${var.project_name}-eks-ro"
 
   policy = jsonencode({
     Version = "2012-10-17"
